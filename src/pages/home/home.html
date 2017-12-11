@@ -1,14 +1,58 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Notifications Demo
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div>
+    Today's date: {{ moment().format("L") }}
+  </div>
+  <div>
+    Scheduled Local notification Ids: {{ scheduledIds != "" ? scheduledIds : "None" }}
+  </div>
+  <br/>
+  <ion-grid>
+    <ion-row nowrap>
+      <ion-col col-1>ID</ion-col>
+      <ion-col col-3>Release</ion-col>
+      <ion-col col-4>Date</ion-col>
+      <ion-col col-4>Notification</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let row of dbRows" nowrap>
+      <ion-col col-1>{{ row.id }}</ion-col>
+      <ion-col col-3>{{ row.releaseFlag }}</ion-col>
+      <ion-col col-4>{{ row.releaseDate }}</ion-col>
+      <ion-col col-4>{{ row.notificationFlag }}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <br/>
+  <div *ngIf="schedulingTimeout > 0">Scheduling local notification in {{ schedulingTimeout }} second(s)</div>
+  <div *ngIf="query != ''">
+    <div>Query: {{ query }}</div>
+    <br/>
+    <div *ngIf="results.length == 0">Nothing to schedule</div>
+    <br/>
+    <div *ngIf="results.length > 0">
+      Local notifications scheduled for below results
+      <br/>
+      <ion-grid>
+        <ion-row nowrap>
+          <ion-col col-1>ID</ion-col>
+          <ion-col col-3>Release</ion-col>
+          <ion-col col-4>Date</ion-col>
+          <ion-col col-4>Notification</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of results" nowrap>
+          <ion-col col-1>{{ row.id }}</ion-col>
+          <ion-col col-3>{{ row.releaseFlag }}</ion-col>
+          <ion-col col-4>{{ row.releaseDate }}</ion-col>
+          <ion-col col-4>{{ row.notificationFlag }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </ion-content>
